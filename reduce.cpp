@@ -37,7 +37,7 @@ int main (int argc, char* argv[]) {
     std::cerr<<"Usage: "<<argv[0]<<" <n> <nbthreads> <scheduling> <granularity>"<<std::endl;
     return -1;
   }
-    const int arraySize = 1000000000;
+
   int * arr = new int [atoi(argv[1])];
   generateReduceData (arr, atoi(argv[1]));
     int sum =0;
@@ -49,12 +49,12 @@ int main (int argc, char* argv[]) {
     
 
   // write code here
-    for(int i=0; i<arraySize; i++){
+    for(int i=0; i<atoi(argv[1]); i++){
         arr[i] = (rand()%100)+1;
         sum = sum + arr[i];
     }
 #pragma omp parallel for reduction(+:sum)
-    for(int i=0; i<arraySize; i++){
+    for(int i=0; i<atoi(argv[1]); i++){
         sum = sum + arr[i];
     }
     
