@@ -46,7 +46,7 @@ int main (int argc, char* argv[]) {
 # pragma omp for
     for(int i=0; i<atoi(argv[1]); i++){
         arr[i] = (rand()%100)+1;
-        sum=sum+arr[i];
+        //sum = sum + arr[i];
     }
         
     
