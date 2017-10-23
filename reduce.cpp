@@ -42,7 +42,8 @@ int main (int argc, char* argv[]) {
   generateReduceData (arr, atoi(argv[1]));
   
   //write code here
-    for(int i=0; i<atoi(argv[1]; i++){
+# pragma omp for
+    for(int i=0; i<atoi(argv[1]); i++){
         arr[i] = (rand()%100)+1;
         cout << arr[i] << endl;
         sum=sum+a[i];
