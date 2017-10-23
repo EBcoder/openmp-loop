@@ -54,7 +54,7 @@ int main (int argc, char* argv[]) {
    */
 
     time = omp_get_wtime()- timeStart;
-    std::cerr<<timeEnd<<std::endl;
+    std::cerr<<time<<std::endl;
   delete[] arr;
 
   return 0;
