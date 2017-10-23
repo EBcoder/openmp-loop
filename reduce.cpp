@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <sys/types.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -46,8 +46,7 @@ int main (int argc, char* argv[]) {
 # pragma omp for
     for(int i=0; i<atoi(argv[1]); i++){
         arr[i] = (rand()%100)+1;
-        cout << arr[i] << endl;
-        sum=sum+a[i];
+        sum=sum+arr[i];
     }
         
     
