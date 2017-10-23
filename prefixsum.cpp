@@ -44,9 +44,6 @@ int main (int argc, char* argv[]) {
   generatePrefixSumData (arr, atoi(argv[1]));
   
   //write code here
-
-
-
   checkPrefixSumResult(pr, atoi(argv[1]));
   
   delete[] arr;
