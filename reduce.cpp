@@ -42,18 +42,23 @@ int main (int argc, char* argv[]) {
   generateReduceData (arr, atoi(argv[1]));
     int sum =0;
     double timeStart,time;
+    int tId = omp_get_thread_num();
+    int numThread = omp_get_num_threads();
     
     timeStart = omp_get_wtime();
- /* // write code here
-# pragma omp for
+    
+
+  // write code here
     for(int i=0; i<atoi(argv[1]); i++){
         arr[i] = (rand()%100)+1;
-        //sum = sum + arr[i];
+        sum = sum + arr[i];
     }
-        
-   */
-
-    time = omp_get_wtime()- timeStart;
+#pragma omp parallel for reduction(+:sum)
+    for(int i=0; i<atoi(argv[1]); i++){
+        sum = sum + arr[i];
+    }
+    
+    time = omp_get_wtime() - timeStart;
     std::cerr<<time<<std::endl;
   delete[] arr;
 
