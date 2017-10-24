@@ -42,9 +42,17 @@ int main (int argc, char* argv[]) {
   int * arr = new int [atoi(argv[1])];
 
   generatePrefixSumData (arr, atoi(argv[1]));
-  
+   float time, timeStart = omp_get_wtime();
   //write code here
   checkPrefixSumResult(pr, atoi(argv[1]));
+#pragma omp parallel for 
+    for(int i; i = (sizeof(arr)/sizeof(*arr)); i++){
+        pr[i] = pr[i-1] + arr [i -1];
+        
+    }
+    
+    time = omp_get_wtime() - timeStart;
+    std::cerr<<time<<std::endl;
   
   delete[] arr;
 
