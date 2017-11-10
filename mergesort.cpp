@@ -10,14 +10,42 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
   void generateMergeSortData (int* arr, size_t n);
   void checkMergeSortResult (int* arr, size_t n);
-
-  
 #ifdef __cplusplus
 }
 #endif
+void merge(int * arr, int value, int * temporaryNumberArr)
+{
+    int b= 0;
+    int a  = value / 2;
+    int temporaryNumber = 0;
+    while (b< value / 2 && a  < value)
+    {
+        if (arr[b] < arr[a ]){
+            temporaryNumberArr[temporaryNumber = arr[b];
+            b++;
+            temporaryNumber++;
+        }
+        else{
+            temporaryNumberArr[temporaryNumber = arr[a ];
+            a++;
+            temporaryNumber++;
+        }
+    }
+    while (b< value / 2)
+    {
+        temporaryNumberArr[temporaryNumber = arr[b];
+        temporaryNumber++; b++;
+    }
+    while (a  < value){
+        temporaryNumberArr[temporaryNumber = arr[a];
+        temporaryNumber++; a++;
+    }
+    memcpy(arr, temporaryNumberArr, value * sizeof(int));
+}
+
+//
 void mergesort(int * X, int n, int * tmp)
 {
     if (n < 2) return;
@@ -30,7 +58,7 @@ void mergesort(int * X, int n, int * tmp)
     
 #pragma omp taskwait
     
-    /* merge sorted halves into sorted list */
+    /* merge sorted balves into sorted list */
     merge(X, n, tmp);
 }
 void merge(int * X, int n, int * tmp) {
@@ -79,7 +107,8 @@ int main (int argc, char* argv[]) {
   }
 
   int * arr = new int [atoi(argv[1])];
-
+  int* temporaryNumberArr = new int[atoi(argv[1])];
+  int nbthreads = atoi(argv[1]);
   generateMergeSortData (arr, atoi(argv[1]));
   
   //write code here
@@ -95,8 +124,21 @@ int main (int argc, char* argv[]) {
     
     
 }
+std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
 
-  
+
+mSort(arr, atoi(argv[1]), temporaryNumberArr);
+
+
+std::chrono::time_point<std::chrono::system_clock> end = std::chrono::system_clock::now();
+std::chrono::duration<double> elapsed_seconds = end-start;
+std::cerr<<elapsed_seconds.count()<<std::endl;
+
+
+checkMergeSortResult (arr, n);
+
+
+
   checkMergeSortResult (arr, atoi(argv[1]));
   
   delete[] arr;
