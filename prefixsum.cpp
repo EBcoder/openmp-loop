@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <chrono>
+#include <ctime>
 
 
 #ifdef __cplusplus
@@ -50,7 +52,20 @@ int main (int argc, char* argv[]) {
         pr[i] = pr[i-1] + arr [i -1];
         
     }
-    
+    void prefixsum (int * arr , int n, int * pr) {
+        pr [0] = 0;
+    #pragma omp parallel {
+    #pragma omp for schedule(static)
+            for (int i=1; i <=n; ++i){
+                pr[i] = pr[i -1] + arr [i -1];
+            }
+    #pragma omp for schedule(static)
+            for (int i=1; i <=n; ++i){
+                sum += pr[i];
+            }
+        }
+    }
+
     time = omp_get_wtime() - timeStart;
     std::cerr<<time<<std::endl;
   
