@@ -118,11 +118,6 @@ int main (int argc, char* argv[]) {
     
 #pragma omp parallel {
     
-    
-    
-    
-    
-    
 }
 std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
 
