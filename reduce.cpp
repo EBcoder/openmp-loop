@@ -20,7 +20,8 @@ extern "C" {
 
 
 int main (int argc, char* argv[]) {
-    
+    int sum=0;
+    int n = 1000000000;
     //forces openmp to create the threads beforehand
 #pragma omp parallel
     {
@@ -40,12 +41,6 @@ int main (int argc, char* argv[]) {
     int * arr = new int [atoi(argv[1])];
     generateReduceData (arr, atoi(argv[1]));
     //write code here
-     int sum=0;
-    int n = 1000000;
-   
-    
-    //clock
-    
     std::clock_t c_start = std::clock();
     auto timeStart = std::chrono::high_resolution_clock::now();
     
