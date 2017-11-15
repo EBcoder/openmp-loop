@@ -22,6 +22,10 @@ extern "C" {
 int main (int argc, char* argv[]) {
     int sum=0;
     int n = 1000000000;
+    std::clock_t c_start = std::clock();
+    auto t_start = std::chrono::high_resolution_clock::now();
+    std::clock_t c_end = std::clock();
+    auto t_end = std::chrono::high_resolution_clock::now();
     //forces openmp to create the threads beforehand
 #pragma omp parallel
     {
