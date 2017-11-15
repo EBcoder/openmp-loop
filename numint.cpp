@@ -49,7 +49,8 @@ int main (int argc, char* argv[]) {
     int intensity= atoi(argv[5]);
     int i = 0;
     int sum = 0;
-#pragma omp parallel
+    std::clock_t c_start = std::clock();
+    #pragma omp parallel
     for(i=0;i<n;i++){
         float x = (a + (i + 0.5) * ((b-a)/n));
         if(atoi(argv[1]) == 1){
@@ -65,7 +66,11 @@ int main (int argc, char* argv[]) {
         }
     }
     // print the time
-    std::cout << std::fixed << "Time: "<< 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms\n" << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count() << " ms\n";
+    auto timeStart = std::chrono::high_resolution_clock::now();
+    std::clock_t timeEnd = std::clock();
+    auto timeEnd = std::chrono::high_resolution_clock::now();
+    std::cout << std::fixed << "Time: "<< 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms\n" << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count()
+    << " ms\n";
     std::cout<< sum;
 
     
