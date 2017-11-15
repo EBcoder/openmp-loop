@@ -27,6 +27,11 @@ float f4(float x, int intensity);
 
 int main (int argc, char* argv[]) {
   //forces openmp to create the threads beforehand
+    std::clock_t startTime = std::clock();
+    auto t_start = std::chrono::high_resolution_clock::now();
+    
+    std::clock_t endTime = std::clock();
+    auto t_end = std::chrono::high_resolution_clock::now();
 #pragma omp parallel
   {
     int fd = open (argv[0], O_RDONLY);
@@ -49,7 +54,6 @@ int main (int argc, char* argv[]) {
     int intensity= atoi(argv[5]);
     int i = 0;
     int sum = 0;
-    std::clock_t c_start = std::clock();
     #pragma omp parallel
     for(i=0;i<n;i++){
         float x = (a + (i + 0.5) * ((b-a)/n));
@@ -66,10 +70,9 @@ int main (int argc, char* argv[]) {
         }
     }
     // print the time
-    auto timeStart = std::chrono::high_resolution_clock::now();
-    std::clock_t timeEnd = std::clock();
-    auto timeEnd = std::chrono::high_resolution_clock::now();
-    std::cout << std::fixed << "Time: "<< 1000.0 * (timeEnd-timeStart) / CLOCKS_PER_SEC << " ms\n" << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count()
+    std::cout << std::fixed << 1000.0 * (endTime-startTime) / CLOCKS_PER_SEC << " ms\n"
+    << "Wall clock time passed: "
+    << std::chrono::duration<double, std::milli>(t_end-t_start).count()
     << " ms\n";
     std::cout<< sum;
 
