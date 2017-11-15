@@ -69,7 +69,7 @@ int main (int argc, char* argv[]) {
     auto timeStart = std::chrono::high_resolution_clock::now();
     std::clock_t timeEnd = std::clock();
     auto timeEnd = std::chrono::high_resolution_clock::now();
-    std::cout << std::fixed << "Time: "<< 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms\n" << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count()
+    std::cout << std::fixed << "Time: "<< 1000.0 * (timeEnd-timeStart) / CLOCKS_PER_SEC << " ms\n" << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count()
     << " ms\n";
     std::cout<< sum;
 
