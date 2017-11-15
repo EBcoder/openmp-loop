@@ -53,9 +53,8 @@ int main (int argc, char* argv[]) {
         sum = sum + arr[i];
     }
     // print the time
-    std::cout << std::fixed << "Time: "<< 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms\n" <<
-    << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count()
-    << " ms\n";
+    std::cout << std::fixed << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC <<
+    << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count();
     std::cout<< sum;
     delete[] arr;
     

@@ -27,12 +27,6 @@ float f4(float x, int intensity);
 
 int main (int argc, char* argv[]) {
   //forces openmp to create the threads beforehand
-    int function_id = atoi(argv[1]);
-    int a= atoi(argv[2]);
-    int b= atoi(argv[3]);
-    int n= atoi(argv[4]);
-    int intensity= atoi(argv[5]);
-
 #pragma omp parallel
   {
     int fd = open (argv[0], O_RDONLY);
