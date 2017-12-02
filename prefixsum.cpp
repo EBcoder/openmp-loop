@@ -46,13 +46,13 @@ int main (int argc, char* argv[]) {
   generatePrefixSumData (arr, atoi(argv[1]));
    float time, timeStart = omp_get_wtime();
   //write code here
-  checkPrefixSumResult(pr, atoi(argv[1]));
+  checkPrefixSumResult(arr, atoi(argv[1]));
 #pragma omp parallel for 
     for(int i; i = (sizeof(arr)/sizeof(*arr)); i++){
         pr[i] = pr[i-1] + arr [i -1];
         
     }
-    void prefixsum (int * arr , int n, int * pr) {
+    
         pr [0] = 0;
     #pragma omp parallel {
     #pragma omp for schedule(static)

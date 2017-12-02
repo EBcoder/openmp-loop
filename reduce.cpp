@@ -42,22 +42,18 @@ int main (int argc, char* argv[]) {
     int * arr = new int [atoi(argv[1])];
     generateReduceData (arr, atoi(argv[1]));
     //write code here
-    std::clock_t c_start = std::clock();
-    auto timeStart = std::chrono::high_resolution_clock::now();
-    
-    std::clock_t c_end = std::clock();
-    auto timeEnd = std::chrono::high_resolution_clock::now();
+    startTime = std::chrono::high_resolution_clock::now();
     
     
 #pragma omp parallel for reduction(+ : sum)
     for (int i=0; i<n; ++i){
         sum = sum + arr[i];
     }
-    // print the time
-    std::cout << std::fixed << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC <<
-    << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count();
-    std::cout<< sum;
-    delete[] arr;
+    std::chrono::high_resolution_clock::time_point endTime = std::chrono::high_resolution_clock::now();
     
+    std::chrono::duration<double> elapsed_seconds = endTime-startTime;
+    std::cerr<<elapsed_seconds.count()<<std::endl;
+    delete[] arr;
+    std::cout<<sum<<std::endl;
     return 0;
 }

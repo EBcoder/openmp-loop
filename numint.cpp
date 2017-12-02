@@ -22,9 +22,6 @@ float f4(float x, int intensity);
 #ifdef __cplusplus
 }
 #endif
-
-
-
 int main (int argc, char* argv[]) {
   //forces openmp to create the threads beforehand
     std::clock_t c_start = std::clock();
@@ -59,21 +56,18 @@ int main (int argc, char* argv[]) {
         float x = (a + (i + 0.5) * ((b-a)/n));
         if(atoi(argv[1]) == 1){
             sum = sum + f1(x,intensity)*((b-a)/n);
-            
         }else if(atoi(argv[1]) == 2){
             sum = sum + f1(x,intensity)*((b-a)/n);
-            
         }else if(atoi(argv[1]) == 3){
             sum = sum + f1(x,intensity)*((b-a)/n);
         }else if(atoi(argv[1]) == 4){
             sum = sum + f1(x,intensity)*((b-a)/n);
         }
     }
-    // print the time
-    std::cout << std::fixed << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << std::chrono::duration<double, std::milli>(timeEnd-timeStart).count();
-    std::cout<< sum;
-
+    std::chrono::high_resolution_clock::time_point endTime = std::chrono::high_resolution_clock::now();
     
-
+    std::chrono::duration<double> elapsed_seconds = endTime-startTime;
+    std::cerr<<elapsed_seconds.count()<<std::endl;
+    std::cout<< sum;
   return 0;
 }
