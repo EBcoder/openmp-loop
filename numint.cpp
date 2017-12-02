@@ -52,6 +52,7 @@ int main (int argc, char* argv[]) {
     int i = 0;
     int sum = 0;
     #pragma omp parallel
+    
     for(i=0;i<n;i++){
         float x = (a + (i + 0.5) * ((b-a)/n));
         if(atoi(argv[1]) == 1){

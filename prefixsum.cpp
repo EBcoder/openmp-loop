@@ -47,6 +47,7 @@ int main (int argc, char* argv[]) {
    float time, timeStart = omp_get_wtime();
   //write code here
   checkPrefixSumResult(arr, atoi(argv[1]));
+  std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
 #pragma omp parallel for 
     for(int i; i = (sizeof(arr)/sizeof(*arr)); i++){
         pr[i] = pr[i-1] + arr [i -1];
@@ -66,8 +67,12 @@ int main (int argc, char* argv[]) {
         }
     }
 
-    time = omp_get_wtime() - timeStart;
-    std::cerr<<time<<std::endl;
+std::chrono::high_resolution_clock::time_point end  std::chrono::high_resolution_clock::now();
+std::chrono::duration<double> elapsed_seconds = endTime-startTime;
+
+checkPrefixSumResult(pr, atoi(argv[1]));
+
+std::cerr<<std::fixed<<elapsed_seconds.count()<<std::endl;
   
   delete[] arr;
 
