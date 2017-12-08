@@ -24,14 +24,18 @@ extern "C" {
 
 int main (int argc, char* argv[]) {
     int sum=0;
-    int n ;
-    
+    char staticSch = '1';
+    char dynamicSch = '2';
+    char guidedSch = '3';
     
     if (argc < 5) {
         std::cerr<<"Usage: "<<argv[0]<<" <n> <nbthreads> <scheduling> <granularity>"<<std::endl;
         return -1;
     }
-    
+    omp_set_num_threads(atoi(argv[2]));
+    char scheduling1 = *argv[3];
+   // std::string dynamSched ("dynamic");
+    //std::string statSched ("static");
     //forces openmp to create the threads beforehand
 #pragma omp parallel
     {
@@ -49,24 +53,33 @@ int main (int argc, char* argv[]) {
     
     int n = atoi(argv[1]);
     //write code here
-    omp_set_num_threads(atoi(argv[2]));
-    std::string dynamSched ("dynamic");
-    std::string statSched ("static");
-    if(statSched.compare(atoi(argv[3])==0)
+    
+    if(scheduling1 == staticSch)
     {
-        omp_set_schdule(omp_sched_static,atoi(argv[4]));
-    }else if (dynamSched.compare(atoi(argv[3])==0))
+        omp_set_schedule(omp_sched_static, atoi(argv[4]));
+    }
+    else if(scheduling1 == dynamicSch)
     {
-            omp_set_schdule(omp_sched_dynamic,atoi(argv[4]));
-    }else
-       {
-           omp_set_schedule(omp_sched_guided,atoi(argv[4]));
-       }
+        omp_set_schedule(omp_sched_dynamic, atoi(argv[4]));
+    }
+    else if(scheduling1 == guidedSch)
+    {
+        omp_set_schedule(omp_sched_guided, atoi(argv[4]));
+    }
     std::chrono::high_resolution_clock::time_point startTime;
-    start = std::chrono::high_resolution_clock::now();
-#pragma omp parallel for reduction(+ : sum)
-    for (int i=0; i<n; ++i){
-        sum = sum + arr[i];
+    startTime = std::chrono::high_resolution_clock::now();
+#pragma omp parallel
+    {
+#pragma omp single
+        {
+            for (int i = 0; i < N; i++)
+#pragma omp task
+            {
+                pthread_mutex_lock(&mutex);
+                sum = sum + arr[i]
+                pthread_unlock_mutex(&mutex);
+            }
+        }
     }
     std::chrono::high_resolution_clock::time_point endTime = std::chrono::high_resolution_clock::now();
     

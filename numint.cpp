@@ -23,12 +23,7 @@ float f4(float x, int intensity);
 }
 #endif
 int main (int argc, char* argv[]) {
-  //forces openmp to create the threads beforehand
-    std::clock_t c_start = std::clock();
-    auto timeStart = std::chrono::high_resolution_clock::now();
-    
-    std::clock_t c_end = std::clock();
-    auto timeEnd = std::chrono::high_resolution_clock::now();
+      //forces openmp to create the threads beforehand
 #pragma omp parallel
   {
     int fd = open (argv[0], O_RDONLY);
@@ -44,16 +39,37 @@ int main (int argc, char* argv[]) {
     std::cerr<<"Usage: "<<argv[0]<<" <functionid> <a> <b> <n> <intensity> <nbthreads> <scheduling> <granularity>"<<std::endl;
     return -1;
   }
+    int sum=0;
+    char staticSch = '1';
+    char dynamicSch = '2';
+    char guidedSch = '3';
+    char scheduling1 = *argv[7];
+   
+
     int functionid = atoi(argv[1]);
     int a= atoi(argv[2]);
     int b= atoi(argv[3]);
     int n= atoi(argv[4]);
     int intensity= atoi(argv[5]);
-    int i = 0;
-    int sum = 0;
-    #pragma omp parallel
+    omp_set_num_threads(atoi(argv[6]));
     
-    for(i=0;i<n;i++){
+    if(scheduling1 == staticSch)
+    {
+        omp_set_schedule(omp_sched_static, atoi(argv[8]));
+    }
+    else if(scheduling1 == dynamicSch)
+    {
+        omp_set_schedule(omp_sched_dynamic, atoi(argv[8]));
+    }
+    else if(scheduling1 == guidedSch)
+    {
+        omp_set_schedule(omp_sched_guided, atoi(argv[8]));
+    }
+    std::chrono::high_resolution_clock::time_point startTime;
+    startTime = std::chrono::high_resolution_clock::now();
+    
+#pragma omp parallel for reduction(+: sum) schedule(runtime)
+    for(int i=0;i<n;i++){
         float x = (a + (i + 0.5) * ((b-a)/n));
         if(atoi(argv[1]) == 1){
             sum = sum + f1(x,intensity)*((b-a)/n);
@@ -68,7 +84,7 @@ int main (int argc, char* argv[]) {
     std::chrono::high_resolution_clock::time_point endTime = std::chrono::high_resolution_clock::now();
     
     std::chrono::duration<double> elapsed_seconds = endTime-startTime;
-    std::cerr<<elapsed_seconds.count()<<std::endl;
     std::cout<< sum;
+    std::cerr<<elapsed_seconds.count()<<std::endl;
   return 0;
 }
